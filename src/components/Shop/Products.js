@@ -11,6 +11,7 @@ const Products = (props) => {
       <ul>
         {items.map(product =>
           <ProductItem
+            item={product}
             title={product.title}
             price={product.price}
             description={product.description}

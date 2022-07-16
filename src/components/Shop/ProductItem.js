@@ -6,11 +6,11 @@ import classes from './ProductItem.module.css';
 const ProductItem = (props) => {
   const dispatch = useDispatch()
 
-  const { title, price, description } = props;
+  const { title, price, description, item } = props;
 
   const addItemHandler = (e) => {
     e.preventDefault();
-    dispatch(changeNumberOfItem({ title: title, type: "add" }))
+    dispatch(changeNumberOfItem({ title: title, type: "add", item: item }))
   }
 
   return (

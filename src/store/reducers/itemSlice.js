@@ -17,7 +17,7 @@ const initialState = {
   ],
   selectedItems: [
     { id: 1, title: 'React App', quantity: 6, total: 600, price: 100 },
-    { id: 2, title: 'Rails App', quantity: 2, total: 500, price: 250 }
+    { id: 2, title: 'Rails App', quantity: 2, total: 500, price: 250 },
   ],
 }
 
@@ -26,16 +26,40 @@ const itemSlice = createSlice({
   initialState,
   reducers: {
     changeNumberOfItem: (state, action) => {
-      const { title, type } = action.payload
+      const { title, type, item } = action.payload
+      // ! WE TRY TO FIND THE ITEM THE USE CLICKED ON INSIDE THE SELECTED ITEMS ARRAY
       const product = state.availableItems.find(item => item.title === title)
-      const itemToAdd = state.selectedItems.find(item => item.title === title)
+      let itemToAdd = state.selectedItems.find(item => item.title === title)
+
+      // ! WE CREATE A NEW SELECTED ITEM IF WE DON'T FIND THE ITEM IN THE ARRAY.
+      // ! WE ALSO USE THE SPREAD OPERATOR TO MAKE SURE WE KEEP THE PREVIOUS ITEMS
+      if (!itemToAdd) {
+        state.selectedItems.push({
+          // ? WE INITIALISE THE ID AT 0 IF 0 ITEM WAS ADDED BEFORE.
+          // ? OTHERWISE LAST ITEM ID + 1
+          id: state.selectedItems.length !== 0 ? state.selectedItems[state.selectedItems.length - 1].id + 1 : 0,
+          title: item.title,
+          quantity: 0,
+          total: item.price,
+          price: item.price
+        })
+
+        // ! WE SELECT THE LAST ITEM, FRESHLY CREATED FROM THE SELECTED ITEM ARRAY
+        itemToAdd = state.selectedItems[state.selectedItems.length - 1]
+      }
+      // ! FINALLY WE UPDATE THE FRESHLY CREATED ITEM (QUANTITY + TOTAL)
       if (type === "add") {
         itemToAdd.quantity++
         itemToAdd.total += product.price
       } else if (type === "remove") {
-        itemToAdd.quantity--
-        itemToAdd.total -= product.price
+        if (itemToAdd.quantity === 1) {
+          state.selectedItems = state.selectedItems.filter(item => item !== itemToAdd)
+        } else {
+          itemToAdd.quantity--
+          itemToAdd.total -= product.price
+        }
       }
+      console.log(state.selectedItems.length);
     },
   }
 })
