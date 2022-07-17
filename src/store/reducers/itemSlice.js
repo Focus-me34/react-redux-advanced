@@ -27,7 +27,7 @@ const itemSlice = createSlice({
   reducers: {
     changeNumberOfItem: (state, action) => {
       const { title, type, item } = action.payload
-      // ! WE TRY TO FIND THE ITEM THE USE CLICKED ON INSIDE THE SELECTED ITEMS ARRAY
+      // ! WE TRY TO FIND THE ITEM THE USER CLICKED ON INSIDE THE SELECTED ITEMS ARRAY
       const product = state.availableItems.find(item => item.title === title)
       let itemToAdd = state.selectedItems.find(item => item.title === title)
 
