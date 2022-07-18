@@ -30,7 +30,6 @@ const itemSlice = createSlice({
       const { title, type, item } = action.payload
       // ! WE TRY TO FIND THE ITEM THE USER CLICKED ON INSIDE THE SELECTED ITEMS ARRAY
       const product = state.availableItems.find(item => item.title === title)
-      console.log(state.selectedItems);
       let itemToAdd = state.selectedItems.find(item => item.title === title)
 
       // ! WE CREATE A NEW SELECTED ITEM IF WE DON'T FIND THE ITEM IN THE ARRAY.
@@ -61,7 +60,6 @@ const itemSlice = createSlice({
           itemToAdd.total -= product.price
         }
       }
-      console.log(state.selectedItems.length);
     },
   }
 })
