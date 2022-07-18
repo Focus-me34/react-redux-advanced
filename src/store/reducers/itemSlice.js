@@ -19,6 +19,7 @@ const initialState = {
     { id: 1, title: 'React App', quantity: 1, total: 100, price: 100 },
     { id: 2, title: 'Rails App', quantity: 1, total: 250, price: 250 },
   ],
+  changed: false
 }
 
 const itemSlice = createSlice({
@@ -52,6 +53,7 @@ const itemSlice = createSlice({
       if (type === "add") {
         itemToAdd.quantity++
         itemToAdd.total += product.price
+        state.changed = true;
       } else if (type === "remove") {
         if (itemToAdd.quantity === 1) {
           state.selectedItems = state.selectedItems.filter(item => item !== itemToAdd)
@@ -59,6 +61,7 @@ const itemSlice = createSlice({
           itemToAdd.quantity--
           itemToAdd.total -= product.price
         }
+        state.changed = true;
       }
     },
   }

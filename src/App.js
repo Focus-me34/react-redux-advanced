@@ -11,7 +11,7 @@ let isInitialPageLoad = true
 function App() {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
-  const items = useSelector(state => state.item.selectedItems);
+  const items = useSelector(state => state.item);
 
   useEffect(() => {
     dispatch(getCartData());
@@ -24,8 +24,13 @@ function App() {
       return
     }
 
-    dispatch(sendCartData(items));
-  }, [items, dispatch])
+    // ! IF THE ITEM ARRAY IN CART CHANGED, WE POST THE DATA
+    // ! IT'S A WAY TO AVOID POSTING THE CART WHEN THE APPLICATION RELOAD
+    if (items.changed) {
+      dispatch(sendCartData(items.selectedItems));
+    }
+
+  }, [items.selectedItems, items.changed, dispatch])
 
   return (
     <Layout>
