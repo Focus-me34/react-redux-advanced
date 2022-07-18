@@ -13,14 +13,14 @@ function App() {
   const cart = useSelector(state => state.cart);
   const items = useSelector(state => state.item.selectedItems);
 
-  // useEffect(() => {
-  //   dispatch(getCartData());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getCartData());
+  }, [dispatch]);
 
   useEffect(() => {
     if (isInitialPageLoad) {
       isInitialPageLoad = false
-      dispatch(getCartData());
+      // dispatch(getCartData());
       return
     }
 
