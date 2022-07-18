@@ -14,6 +14,7 @@ function App() {
   const items = useSelector(state => state.item.selectedItems);
 
   // useEffect(() => {
+  //   dispatch(getCartData());
   // }, [dispatch]);
 
   useEffect(() => {
