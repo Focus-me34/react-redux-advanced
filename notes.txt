@@ -1,0 +1,2 @@
+API FIREBASE:
+https://react-redux-advanced-e4389-default-rtdb.europe-west1.firebasedatabase.app/

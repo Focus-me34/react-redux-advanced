@@ -1,11 +1,11 @@
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeNumberOfItem } from '../../store/reducers/itemSlice';
 import Card from '../UI/Card';
 import classes from './ProductItem.module.css';
 
 const ProductItem = (props) => {
   const dispatch = useDispatch()
-
   const { title, price, description, item } = props;
 
   const addItemHandler = (e) => {
