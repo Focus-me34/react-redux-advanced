@@ -3,7 +3,8 @@ import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
 import { useEffect } from 'react';
-import { showNotification } from './store/reducers/cartSlice';
+// import { showNotification } from './store/reducers/cartSlice';
+import { sendCartData } from './store/reducers/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 let isInitialPageLoad = true
@@ -15,27 +16,30 @@ function App() {
 
   console.log(cart.notification);
   useEffect(() => {
-    if (!isInitialPageLoad) {
-      POSTnewItem(items).catch(error => dispatch(showNotification({ status: "error", title: "Error", message: "Error sending the cart data" })))
+    if (isInitialPageLoad) {
+      // POSTnewItem(items).catch(error => dispatch(showNotification({ status: "error", title: "Error", message: "Error sending the cart data" })))
+      isInitialPageLoad = false
+      return
     }
-    isInitialPageLoad = false
+
+    dispatch(sendCartData(items))
   }, [items, dispatch])
 
   const POSTnewItem = async (items) => {
-    dispatch(showNotification({ status: "pending", title: "Sending...", message: "Sending cart data!" }))
-    const res = await fetch("https://react-redux-advanced-e4389-default-rtdb.europe-west1.firebasedatabase.app/cartItems.json", {
-      method: "PUT",
-      body: JSON.stringify(items),
-      headers: { "Content-Type": "application/json" }
-    });
+    // dispatch(showNotification({ status: "pending", title: "Sending...", message: "Sending cart data!" }))
+    // const res = await fetch("https://react-redux-advanced-e4389-default-rtdb.europe-west1.firebasedatabase.app/cartItems.json", {
+    //   method: "PUT",
+    //   body: JSON.stringify(items),
+    //   headers: { "Content-Type": "application/json" }
+    // });
 
-    if (!res.ok) {
-      dispatch(showNotification({ status: "error", title: "Error", message: "Error sending the cart data" }))
-      throw new Error("An error occured: Failed to update the cart")
-    }
+    // if (!res.ok) {
+    //   dispatch(showNotification({ status: "error", title: "Error", message: "Error sending the cart data" }))
+    //   throw new Error("An error occured: Failed to update the cart")
+    // }
 
     // const data = await res.json();
-    dispatch(showNotification({ status: "success", title: "Success", message: "Sent cart datas successfuly!" }))
+    // dispatch(showNotification({ status: "success", title: "Success", message: "Sent cart datas successfuly!" }))
   }
 
   return (
