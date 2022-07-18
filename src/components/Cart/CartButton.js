@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const CartButton = (props) => {
   const dispatch = useDispatch();
-  const selectedItems = useSelector(state => state.item.selectedItems)
+  const selectedItems = useSelector(state => state.item.selectedItems) || []
 
   let totalItems = 0
   for (const item of selectedItems) {

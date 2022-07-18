@@ -3,7 +3,7 @@ import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
 import { useEffect } from 'react';
-import { sendCartData } from './store/reducers/cartSlice';
+import { sendCartData, getCartData } from './store/reducers/itemSlice-actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 let isInitialPageLoad = true
@@ -11,21 +11,28 @@ let isInitialPageLoad = true
 function App() {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
-  const items = useSelector(state => state.item);
+  const items = useSelector(state => state.item.selectedItems);
 
-  console.log(cart.notification);
+  useEffect(() => {
+    dispatch(getCartData());
+  }, [dispatch]);
+
   useEffect(() => {
     if (isInitialPageLoad) {
       isInitialPageLoad = false
       return
     }
 
-    dispatch(sendCartData(items))
+    dispatch(sendCartData(items));
   }, [items, dispatch])
 
   return (
     <Layout>
-      {cart.notification && <Notification status={cart.notification.status} title={cart.notification.title} message={cart.notification.message} />}
+      {cart.notification && <Notification
+        status={cart.notification.status}
+        title={cart.notification.title}
+        message={cart.notification.message} />}
+
       {cart.showCart && <Cart />}
       <Products />
     </Layout>

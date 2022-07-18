@@ -16,8 +16,8 @@ const initialState = {
     }
   ],
   selectedItems: [
-    { id: 1, title: 'React App', quantity: 6, total: 600, price: 100 },
-    { id: 2, title: 'Rails App', quantity: 2, total: 500, price: 250 },
+    { id: 1, title: 'React App', quantity: 1, total: 100, price: 100 },
+    { id: 2, title: 'Rails App', quantity: 1, total: 250, price: 250 },
   ],
 }
 
@@ -25,10 +25,12 @@ const itemSlice = createSlice({
   name: "item",
   initialState,
   reducers: {
+    replaceCart: (state, action) => { state.selectedItems = action.payload.cartItems },
     changeNumberOfItem: (state, action) => {
       const { title, type, item } = action.payload
       // ! WE TRY TO FIND THE ITEM THE USER CLICKED ON INSIDE THE SELECTED ITEMS ARRAY
       const product = state.availableItems.find(item => item.title === title)
+      console.log(state.selectedItems);
       let itemToAdd = state.selectedItems.find(item => item.title === title)
 
       // ! WE CREATE A NEW SELECTED ITEM IF WE DON'T FIND THE ITEM IN THE ARRAY.
@@ -40,7 +42,7 @@ const itemSlice = createSlice({
           id: state.selectedItems.length !== 0 ? state.selectedItems[state.selectedItems.length - 1].id + 1 : 0,
           title: item.title,
           quantity: 0,
-          total: item.price,
+          total: 0,
           price: item.price
         })
 
@@ -64,7 +66,8 @@ const itemSlice = createSlice({
   }
 })
 
-export const { changeNumberOfItem } = itemSlice.actions
+
+export const { changeNumberOfItem, replaceCart } = itemSlice.actions
 export default itemSlice.reducer
 
 // { id: 1, title: 'React App', quantity: 6, total: 600, price: 100 },
